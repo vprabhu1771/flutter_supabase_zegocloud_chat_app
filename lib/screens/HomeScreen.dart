@@ -8,6 +8,7 @@ import '../widgets/CustomDrawer.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:zego_zimkit/zego_zimkit.dart';
 
+import 'ChatDetailScreen.dart';
 import 'SettingScreen.dart';
 
 final supabase = Supabase.instance.client;
@@ -129,12 +130,24 @@ class _HomeScreenState extends State<HomeScreen> {
             //   style: TextStyle(fontSize: 12),
             // ),
             onTap: () {
+              // Navigate to the Default message list page
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(
+              //     builder: (context) => ZIMKitMessageListPage(
+              //       conversationID: peerUserId,
+              //       conversationType: ZIMConversationType.peer,
+              //     ),
+              //   ),
+              // );
+
+              // Navigate to the Custom message list page
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => ZIMKitMessageListPage(
-                    conversationID: conversation.id,
-                    conversationType: conversation.type,
+                  builder: (context) => ChatDetailScreen(
+                    peerUserId: conversation.id,
+                    peerUserName: conversation.name,
                   ),
                 ),
               );
