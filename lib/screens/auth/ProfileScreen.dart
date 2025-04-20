@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../widgets/CustomDrawer.dart';
 import '../HomeScreen.dart';
 import 'EditProfilePicScreen.dart';
 import 'EditProfileScreen.dart';
+
+final supabase = Supabase.instance.client;
 
 class ProfileScreen extends StatefulWidget {
   final String title;
