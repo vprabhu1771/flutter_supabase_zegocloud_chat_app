@@ -3,6 +3,8 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_supabase_zegocloud_chat_app/screens/HomeScreen.dart';
 import 'package:flutter_supabase_zegocloud_chat_app/screens/RecentChatScreen.dart';
 import 'package:flutter_supabase_zegocloud_chat_app/screens/auth/LoginScreen.dart';
+import 'package:flutter_supabase_zegocloud_chat_app/services/UiProvider.dart';
+import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:zego_zimkit/zego_zimkit.dart';
 
@@ -34,11 +36,33 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      // home: HomeScreen(title: 'Home'),
-      // home: RecentChatScreen(),
-      home: LoginScreen(title: 'Login'),
+    return ChangeNotifierProvider(
+      create: (BuildContext context)=>UiProvider()..init(),
+      child: Consumer<UiProvider>(
+        builder: (context, UiProvider notifier, child) {
+          return MaterialApp(
+
+            debugShowCheckedModeBanner: false,
+
+            // title: 'Dark Theme',
+            //By default theme setting, you can also set system
+            // when your mobile theme is dark the app also become dark
+
+            themeMode: notifier.isDark ? ThemeMode.dark : ThemeMode.light,
+
+            //Our custom theme applied
+            darkTheme: notifier.isDark ? notifier.darkTheme : notifier.lightTheme,
+
+            theme: ThemeData(
+              colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+              useMaterial3: true,
+            ),
+
+            home: LoginScreen(title: 'Login'),
+
+          );
+        },
+      ),
     );
   }
 }
