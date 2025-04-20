@@ -1,9 +1,14 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_supabase_zegocloud_chat_app/screens/NewChatScreen.dart';
+import 'package:image_picker/image_picker.dart';
 import '../widgets/CustomDrawer.dart';
 
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:zego_zimkit/zego_zimkit.dart';
+
+import 'SettingScreen.dart';
 
 final supabase = Supabase.instance.client;
 
@@ -36,6 +41,29 @@ class _HomeScreenState extends State<HomeScreen> {
     _initZIMUser(); // async method called without await
   }
 
+  File? _imageFile;
+  final ImagePicker _picker = ImagePicker();
+
+  /// Fetch image from gallery.
+  Future<void> getImageFromGallery() async {
+    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      setState(() {
+        _imageFile = File(pickedFile.path);
+      });
+    }
+  }
+
+  /// Fetch image from camera.
+  Future<void> getImageFromCamera() async {
+    final pickedFile = await _picker.pickImage(source: ImageSource.camera);
+    if (pickedFile != null) {
+      setState(() {
+        _imageFile = File(pickedFile.path);
+      });
+    }
+  }
+
   Future<void> _initZIMUser() async {
     if (user != null) {
       final zimUserID = user?.userMetadata?['email']?.split('@')[0];
@@ -49,7 +77,38 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(widget.title)),
+      appBar: AppBar(
+          title: Text(widget.title),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.camera_alt),
+            onPressed: getImageFromCamera,
+          ),
+          IconButton(
+            icon: const Icon(Icons.search),
+            onPressed: () {},
+          ),
+          PopupMenuButton<String>(
+            onSelected: (value) {
+              if (value == 'Settings') {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => SettingScreen(title: 'Settings'),
+                  ),
+                );
+              }
+            },
+            itemBuilder: (BuildContext context) => [
+              const PopupMenuItem(value: 'New Group', child: Text('New Group')),
+              const PopupMenuItem(value: 'New Broadcast', child: Text('New Broadcast')),
+              const PopupMenuItem(value: 'Linked Devices', child: Text('Linked Devices')),
+              const PopupMenuItem(value: 'Payments', child: Text('Payments')),
+              const PopupMenuItem(value: 'Settings', child: Text('Settings')),
+            ],
+          ),
+        ],
+      ),
       drawer: CustomDrawer(parentContext: context),
       body: ZIMKitConversationListView(
         // onPressed: () {},
