@@ -45,6 +45,7 @@ dependencies:
   provider: ^6.1.4
   zego_uikit_prebuilt_call: ^4.16.28
   lucide_icons: ^0.257.0
+  flutter_launcher_icons: ^0.14.3
 
 dev_dependencies:
   flutter_test:
