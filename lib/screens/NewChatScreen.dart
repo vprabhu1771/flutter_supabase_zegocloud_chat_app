@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_supabase_zegocloud_chat_app/screens/ChatDetailScreen.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:zego_zimkit/zego_zimkit.dart';
 
@@ -61,13 +62,24 @@ class _NewChatScreenState extends State<NewChatScreen> {
                   // The conversation ID is the other user's ID (peer-to-peer)
                   final peerUserId = user['email'].toString().split('@')[0];
 
-                  // Navigate to the message list page
+                  // Navigate to the Default message list page
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(
+                  //     builder: (context) => ZIMKitMessageListPage(
+                  //       conversationID: peerUserId,
+                  //       conversationType: ZIMConversationType.peer,
+                  //     ),
+                  //   ),
+                  // );
+
+                  // Navigate to the Custom message list page
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => ZIMKitMessageListPage(
-                        conversationID: peerUserId,
-                        conversationType: ZIMConversationType.peer,
+                      builder: (context) => ChatDetailScreen(
+                        peerUserId: peerUserId,
+                        peerUserName: user['name'],
                       ),
                     ),
                   );
