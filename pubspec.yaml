@@ -44,6 +44,7 @@ dependencies:
   shared_preferences: ^2.5.3
   provider: ^6.1.4
   zego_uikit_prebuilt_call: ^4.16.28
+  lucide_icons: ^0.257.0
 
 dev_dependencies:
   flutter_test:
