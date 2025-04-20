@@ -18,7 +18,7 @@
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <application
-        android:label="flutter_supabase_zegocloud_chat_app"
+        android:label="Chat Box"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
         <activity
